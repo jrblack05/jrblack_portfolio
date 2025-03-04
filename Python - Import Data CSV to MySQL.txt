@@ -1,0 +1,32 @@
+import pandas as pd
+from sqlalchemy import create_engine
+
+# Step 1: Configure your database connection
+# Replace with your actual database credentials
+DB_TYPE = 'mysql+pymysql'
+DB_HOST = 'localhost'
+DB_PORT = '3306'
+DB_USER ='root'
+DB_PASSWORD = 'Buddyblack13'
+DB_NAME = 'world1'
+
+# Create the connection string
+connection_string = f"{DB_TYPE}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+
+# Step 2: Connect to the database
+engine = create_engine(connection_string)
+
+# Step 3: Load your data
+# Replace 'player_defense_reg_2024.csv' with your actual file path
+data = pd.read_csv('C:/Users/jrbla/Desktop/player_defense_reg_2024.csv')
+
+# Step 4: Write data to your SQL table
+# Replace 'player_defense_reg_2024' with your actual table name
+table_name = 'player_defense_reg_2024'
+
+# Use pandas to_sql method to bulk insert the data
+try:
+data.to_sql(name=table_name, con=engine, if_exists='append', index=False)	
+print("Data inserted successfully!")
+except Exception as e:
+print(f"An error occurred: {e}")
