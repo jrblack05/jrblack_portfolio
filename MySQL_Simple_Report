@@ -1,0 +1,24 @@
+-- Set table and column names (modify as needed)
+SET @table_name = 'your_table_name';
+SET @column_name = 'your_column_name';
+
+-- Distribution Analysis (Top 10 most common values)
+SELECT @column_name AS column_name, 
+       COUNT(*) AS count, 
+       ROUND(COUNT(*) / (SELECT COUNT(*) FROM your_table_name) * 100, 2) AS percentage
+FROM your_table_name
+GROUP BY @column_name
+ORDER BY count DESC
+LIMIT 10;
+
+-- Min/Max Values for Numeric and Date Columns
+SELECT 
+    MIN(@column_name) AS min_value, 
+    MAX(@column_name) AS max_value
+FROM your_table_name;
+
+-- Checking for Invalid Characters in String Columns
+SELECT @column_name AS column_name, 
+       COUNT(*) AS invalid_count
+FROM your_table_name
+WHERE @column_name REGEXP '[^a-zA-Z0-9 ]';  -- Modify regex if needed
